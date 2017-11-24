@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	
+	<script type="text/javascript" src="nui://game/ui/jquery.js"></script>
+	
+	<script type="text/javascript">
+	function dragStart( e ) {
+		console.log( "dragstart" );
+		e.dataTransfer.effectAllowed = "move";
+		e.dataTransfer.setData( "Text", e.target.getAttribute( "id" ) );
+		e.dataTransfer.setDragImage( e.target, 0, 0 );
+		return true;
+	}
+	
+	function dragEnter( e ) {
+		console.log( "dragenter" );
+		e.preventDefault();
+		return true;
+	}
+	
+	function dragOver( e ) {
+		console.log( "dragover" );
+		return false;
+	}
+	
+	function drop( e ) {
+		console.log( "drop" );
+		e.target.appendChild( document.getElementById( e.dataTransfer.getData( "Text" ) ) );
+		e.stopPropagation();
+		return false;
+	}
+	</script>
+	
+	<style type="text/css">
+	* {
+	user-select: all !important;
+	}
+	
+	#draggableItem {
+	width: 250px;
+	height: 250px;
+	background-color: #C0FFFF;
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	}
+	
+	#droppableContainer {
+	width: 500px;
+	height: 500px;
+	background-color: #FFC0FF;
+	position: absolute;
+	bottom: 16px;
+	right: 16px;
+	}
+	</style>
+</head>
+<body>
+<!--
+<iframe src="https://html5demos.com/drag/" style="width: 1024px; height: 768px; left: 300px; position: absolute;"></iframe>
+-->
+<div id="draggableItem" draggable="true" ondragstart="return dragStart(event)"></div>
+
+<div id="droppableContainer" ondragenter="return dragEnter(event)" ondrop="return drop(event)" ondragover="return dragOver(event)"></div>
+
+</body>
+</html>
